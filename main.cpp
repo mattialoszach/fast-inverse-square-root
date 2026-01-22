@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <chrono>
 #include <random>
+#include <string_view>
 
 // Used to avoid Optimizations regarding a variable x
 #if defined(__GNUC__) || defined(__clang__)
@@ -49,6 +50,34 @@ static inline float rsqrt_neon_2(float x) {
     return vget_lane_f32(y, 0); // Extract Lane 0
 }
 
+// Benchmark Function
+template <typename F> // Template to allow Argument Function being inlined correctly (no Call-Overhead)
+static double bench(std::string_view name, F f, const float* xs, std::size_t n, std::size_t iters) {
+    volatile float acc = 0.0f; // Avoid unwanted Optimizations
+
+    // Warm-Up (e.g. for Cache)
+    for (int k = 0; k < 2; k++) {
+        for (std::size_t i = 0; i < n; i++) acc += f(xs[i]);
+    }
+
+    // Measure Time
+    auto t0 = std::chrono::steady_clock::now();
+
+    for (std::size_t k = 0; k < iters;  k++) {
+        for (std::size_t i = 0; i < n; i++) acc += f(xs[i]);
+    }
+
+    auto t1 = std::chrono::steady_clock::now();
+
+    do_not_optimize(acc); // Avoid unwanted Optimizations
+
+    // Calculate Result
+    std::chrono::duration<double> dt = t1 - t0;
+    double ns_per_op = (dt.count() * 1e9) / (double(n) * double(iters)); // Time per Operation (in ns)
+    std::cout << name << ": " << ns_per_op << " ns/op\n";
+    return ns_per_op;
+}
+
 int main() {
     constexpr std::size_t N = 1 << 16;
     constexpr std::size_t ITERS = 300;
@@ -59,8 +88,18 @@ int main() {
 
     for (std::size_t i = 0; i < N; i++) xs[i] = dist(rng); 
 
+    // Checking results
+    float x_test = 10.0f;
+
+    std::cout << "Comparing Outputs of different Algorithms (for x=10.0)" << std::endl;
+    std::cout << "rsqrtf_std: " << rsqrt_std(x_test) << std::endl;
+    std::cout << "rsqrtf_neon_1: " << rsqrt_neon_1(x_test) << std::endl;
+    std::cout << "rsqrtf_neon_2: " << rsqrt_neon_2(x_test) << std::endl;
+
     // Running benchmarks
-    // ...
+    bench("std: 1/sqrtf", rsqrt_std, xs, N, ITERS);
+    bench("std: rsqrtf (1 refine)", rsqrt_neon_1, xs, N, ITERS);
+    bench("neon: rsqrtf (2 refine)", rsqrt_neon_2, xs, N, ITERS);
 
     return 0;
 }
