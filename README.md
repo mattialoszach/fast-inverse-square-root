@@ -6,4 +6,4 @@ clang++ -O3 -mcpu=native main.cpp -o bench
 ./bench
 
 ## Conclusion
-Compilers are to op!
+Compilers are too op!
