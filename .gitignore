@@ -1,0 +1,65 @@
+# =========================
+# Build / Compiler Output
+# =========================
+build/
+build-*/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Binaries
+bench
+bench_*
+a.out
+*.exe
+*.out
+
+# Object / Dependency Files
+*.o
+*.obj
+*.lo
+*.la
+*.a
+*.d
+*.so
+*.dylib
+
+# =========================
+# Benchmark Outputs / Data
+# =========================
+data/*.csv
+results/
+*.log
+
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# =========================
+# Editor / OS Noise
+# =========================
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# =========================
+# macOS / Xcode
+# =========================
+*.xcuserstate
+DerivedData/
