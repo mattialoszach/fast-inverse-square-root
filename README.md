@@ -107,6 +107,36 @@ trade-off plots. PDF is the default for papers; pass `--format svg` or
 `--format png` for another format, and use `--output-dir` to choose the
 destination directory.
 
+To refresh the figures embedded in this README after a new benchmark run:
+
+```sh
+python3 scripts/visualize.py data/bench.csv \
+  --format png --dpi 200 --output-dir docs/figures
+```
+
+## Benchmark figures
+
+### Throughput
+
+<p align="center">
+  <img src="docs/figures/throughput.png" alt="Throughput by inverse square root implementation with P10-P90 timing intervals" width="760">
+</p>
+
+### Numerical error
+
+<p align="center">
+  <img src="docs/figures/accuracy.png" alt="Mean and maximum relative error by inverse square root implementation" width="760">
+</p>
+
+### Speed-accuracy trade-off
+
+The highlighted Pareto frontier contains methods for which no alternative is
+both faster and more accurate.
+
+<p align="center">
+  <img src="docs/figures/speed-accuracy-tradeoff.png" alt="Maximum error versus throughput with the Pareto frontier highlighted" width="680">
+</p>
+
 ## Reading the output
 
 The speed table contains:
