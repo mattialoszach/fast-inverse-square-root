@@ -92,6 +92,21 @@ Available options:
 --help            Show all options
 ```
 
+## Visualizing benchmark data
+
+Install the plotting dependency and generate three publication-ready PDFs:
+
+```sh
+python3 -m pip install -r requirements.txt
+python3 scripts/visualize.py data/bench.csv
+open results/figures/throughput.pdf # macOS
+```
+
+The script produces separate throughput, numerical-error, and speed-accuracy
+trade-off plots. PDF is the default for papers; pass `--format svg` or
+`--format png` for another format, and use `--output-dir` to choose the
+destination directory.
+
 ## Reading the output
 
 The speed table contains:
