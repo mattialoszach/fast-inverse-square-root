@@ -1,6 +1,6 @@
-# Fast Inverse Square Root: An ARM64 Benchmarking Case Study
+# Fast Inverse Square Root: ARM64 Benchmark
 
-An ARM64 case study in benchmarking inverse square root algorithms, showing how
+An ARM64 benchmark for inverse square root algorithms, showing how
 dependency chains, compiler auto-vectorization, SIMD utilization, and numerical
 accuracy affect performance conclusions.
 
